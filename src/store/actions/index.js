@@ -1,5 +1,4 @@
 import types from '../actionTypes';
+import { getLetterMatchCount } from '../../helpers/';
 
-export const correctGuess = () => ({
-  type: types.CORRECT_GUESS
-});
+export const guessWord = guessedWord => (dispatch, getState) => {};
