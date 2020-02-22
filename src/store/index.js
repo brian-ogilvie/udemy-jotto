@@ -10,7 +10,8 @@ const composeEnhancer =
     ? compose
     : window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const middleware = env === 'production' ? [thunk] : [thunk, createLogger()];
+export const middleware =
+  env === 'production' ? [thunk] : [thunk, createLogger()];
 
 export default createStore(
   reducer,
