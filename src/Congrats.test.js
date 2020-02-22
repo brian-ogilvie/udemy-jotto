@@ -6,6 +6,8 @@ import { findByTestAttr, checkProps } from '../test/testUtils';
 
 Enzyme.configure({ adapter: new Adapter() });
 
+const defaultProps = { success: true };
+
 /**
  * Facory function to create ShallowWrapper
  * @function
@@ -13,7 +15,8 @@ Enzyme.configure({ adapter: new Adapter() });
  * @returns {ShallowWrapper}
  */
 const setup = (props = {}) => {
-  return shallow(<Congrats {...props} />);
+  const setupProps = { ...defaultProps, ...props };
+  return shallow(<Congrats {...setupProps} />);
 };
 
 test('renders without error', () => {
