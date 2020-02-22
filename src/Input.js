@@ -15,14 +15,16 @@ function Input({ success }) {
         type="submit"
         className="btn btn-primary mb-2"
       >
-        Guess
+        Submit
       </button>
     </form>
   );
   return <div data-test="component-input">{contents}</div>;
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  success: state.success
+});
 
 const mapDispatchToProps = dispatch => ({});
 
