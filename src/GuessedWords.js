@@ -6,7 +6,27 @@ export default function GuessedWords({ guessedWords }) {
     guessedWords.length === 0 ? (
       <span data-test="guess-instructions">Try to guess a word!</span>
     ) : (
-      <span />
+      <div data-test="guessed-words">
+        <table>
+          <thead>
+            <tr>
+              <th>Guess</th>
+              <th>Matching Letters</th>
+            </tr>
+          </thead>
+          <tbody>
+            {guessedWords.map((word, i) => {
+              const { guessedWord, letterMatchCount } = word;
+              return (
+                <tr data-test="guessed-word" key={i}>
+                  <td>{guessedWord}</td>
+                  <td>{letterMatchCount}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     );
   return <div data-test="component-guessed-words">{contents}</div>;
 }
