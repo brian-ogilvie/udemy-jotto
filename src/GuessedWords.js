@@ -7,8 +7,8 @@ export default function GuessedWords({ guessedWords }) {
       <span data-test="guess-instructions">Try to guess a word!</span>
     ) : (
       <div data-test="guessed-words">
-        <table>
-          <thead>
+        <table className="table table-sm">
+          <thead className="thead-light">
             <tr>
               <th>Guess</th>
               <th>Matching Letters</th>
