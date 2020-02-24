@@ -1,7 +1,38 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { storeFactory } from '../test/testUtils';
 import App from './App';
 
-test('renders without crashing', () => {
-  shallow(<App />);
+function setup(initialState = {}) {
+  const store = storeFactory(initialState);
+  const wrapper = shallow(<App store={store} />)
+    .dive()
+    .dive();
+  return wrapper;
+}
+
+describe('redux props', () => {
+  test('has success piece of state', () => {
+    const success = true;
+    const wrapper = setup({ success });
+    const { success: successProp } = wrapper.instance().props;
+    expect(successProp).toBe(success);
+  });
+  test('has access to secretWord pice of state', () => {
+    const secretWord = 'party';
+    const wrapper = setup({ secretWord });
+    const { secretWord: secretWordProp } = wrapper.instance().props;
+    expect(secretWordProp).toBe(secretWord);
+  });
+  test('has access to guessedWords piece of state', () => {
+    const guessedWords = [{ guessedWord: 'train', letterMatchCount: 3 }];
+    const wrapper = setup({ guessedWords });
+    const { guessedWords: guessedWordsProp } = wrapper.instance().props;
+    expect(guessedWordsProp).toEqual(guessedWords);
+  });
+  test('getSecretWord action creator is fuction prop', () => {
+    const wrapper = setup();
+    const { getSecretWord: getSecretWordProp } = wrapper.instance().props;
+    expect(getSecretWordProp).toBeInstanceOf(Function);
+  });
 });
