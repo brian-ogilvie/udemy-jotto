@@ -7,7 +7,10 @@ import Congrats from './Congrats';
 import Input from './Input';
 import { getSecretWord } from './store/actions';
 
-class App extends Component {
+export class UnconnectedApp extends Component {
+  componentDidMount() {
+    this.props.getSecretWord();
+  }
   render() {
     const { success, secretWord, guessedWords } = this.props;
     return (
@@ -31,4 +34,4 @@ const mapDispatchToProps = dispatch => ({
   getSecretWord: bindActionCreators(getSecretWord, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(UnconnectedApp);
