@@ -16,6 +16,7 @@ export class UnconnectedInput extends Component {
           data-test="submit-button"
           type="submit"
           className="btn btn-primary mb-2"
+          onClick={() => this.props.guessWord()}
         >
           Submit
         </button>
