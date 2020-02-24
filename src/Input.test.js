@@ -70,30 +70,28 @@ describe('redux props', () => {
 });
 
 describe('guessWord action creator calls', () => {
-  test('guessWord is called when submitt button is clicked', () => {
-    const guessWordMock = jest.fn();
+  let guessWordMock;
+  let wrapper;
+  const guess = 'train';
+
+  beforeEach(() => {
+    guessWordMock = jest.fn();
     const props = {
       success: false,
       guessWord: guessWordMock,
     };
-    const wrapper = shallow(<UnconnectedInput {...props} />);
+    wrapper = shallow(<UnconnectedInput {...props} />);
+    wrapper.setState({ currentGuess: guess });
     const submittButton = findByTestAttr(wrapper, 'submit-button');
-    submittButton.simulate('click');
+    submittButton.simulate('click', { preventDefault() {} });
+  });
+
+  test('guessWord is called when submitt button is clicked', () => {
     const guessWordCalls = guessWordMock.mock.calls.length;
     expect(guessWordCalls).toBe(1);
   });
+
   test('guessWord is called with correct argument', () => {
-    const guessWordMock = jest.fn();
-    const props = {
-      success: false,
-      guessWord: guessWordMock,
-    };
-    const guess = 'train';
-    const wrapper = shallow(<UnconnectedInput {...props} />);
-    const submittButton = findByTestAttr(wrapper, 'submit-button');
-    const inputBox = findByTestAttr(wrapper, 'input-box');
-    inputBox.simulate('change', { target: { name: 'guess', value: guess } });
-    submittButton.simulate('click');
     const arg = guessWordMock.mock.calls[0][0];
     expect(arg).toBe(guess);
   });
