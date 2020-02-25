@@ -6,6 +6,7 @@ import GuessedWords from './GuessedWords';
 import Congrats from './Congrats';
 import Input from './Input';
 import TotalGuesses from './TotalGuesses';
+import ResetGame from './ResetGame';
 import { getSecretWord } from './store/actions';
 
 export class UnconnectedApp extends Component {
@@ -19,6 +20,7 @@ export class UnconnectedApp extends Component {
         <h1>Jotto</h1>
         <div>The secret word is {secretWord}</div>
         <Congrats success={success} />
+        <ResetGame />
         <Input />
         <GuessedWords guessedWords={guessedWords} />
         <TotalGuesses guessedWords={guessedWords} />
