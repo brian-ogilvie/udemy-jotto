@@ -4,7 +4,7 @@ import { checkProps, findByTestAttr } from '../test/testUtils';
 import GuessedWords from './GuessedWords';
 
 const defaultProps = {
-  guessedWord: [{ guessedWords: 'train', letterMatchCount: 3 }]
+  guessedWord: [{ guessedWords: 'train', letterMatchCount: 3 }],
 };
 
 const setup = (props = {}) => {
@@ -37,7 +37,7 @@ describe('if there are words guessed', () => {
   const guessedWords = [
     { guessedWord: 'train', letterMatchCount: 3 },
     { guessedWord: 'goof', letterMatchCount: 2 },
-    { guessedWord: 'party', letterMatchCount: 5 }
+    { guessedWord: 'party', letterMatchCount: 5 },
   ];
   let wrapper;
   beforeEach(() => {
@@ -57,5 +57,13 @@ describe('if there are words guessed', () => {
   test('correct number of guessed words', () => {
     const guessedWordsNodes = findByTestAttr(wrapper, 'guessed-word');
     expect(guessedWordsNodes.length).toBe(guessedWords.length);
+  });
+
+  test('shows guess number next to each guess', () => {
+    const guessNumbers = findByTestAttr(wrapper, 'guess-number');
+    expect(guessNumbers.length).toBe(guessedWords.length);
+    guessNumbers.forEach((guess, i) => {
+      expect(guess.text()).toBe(String(i + 1));
+    });
   });
 });

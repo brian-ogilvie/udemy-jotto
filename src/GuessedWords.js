@@ -10,6 +10,7 @@ export default function GuessedWords({ guessedWords }) {
         <table className="table table-sm">
           <thead className="thead-light">
             <tr>
+              <th>#</th>
               <th>Guess</th>
               <th>Matching Letters</th>
             </tr>
@@ -19,6 +20,7 @@ export default function GuessedWords({ guessedWords }) {
               const { guessedWord, letterMatchCount } = word;
               return (
                 <tr data-test="guessed-word" key={i}>
+                  <td data-test="guess-number">{i + 1}</td>
                   <td>{guessedWord}</td>
                   <td>{letterMatchCount}</td>
                 </tr>
@@ -35,7 +37,7 @@ GuessedWords.propTypes = {
   guessedWords: PropTypes.arrayOf(
     PropTypes.shape({
       guessedWord: PropTypes.string.isRequired,
-      letterMatchCount: PropTypes.number.isRequired
+      letterMatchCount: PropTypes.number.isRequired,
     }).isRequired
-  )
+  ),
 };
