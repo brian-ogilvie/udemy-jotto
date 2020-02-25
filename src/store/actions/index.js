@@ -7,7 +7,7 @@ export const guessWord = guessedWord => (dispatch, getState) => {
   const letterMatchCount = getLetterMatchCount(guessedWord, secretWord);
   dispatch({
     type: types.GUESS_WORD,
-    payload: { guessedWord, letterMatchCount }
+    payload: { guessedWord, letterMatchCount },
   });
   if (guessedWord === secretWord) {
     dispatch({ type: types.CORRECT_GUESS });
@@ -19,9 +19,15 @@ export const getSecretWord = () => async dispatch => {
     const { data } = await axios.get('http://localhost:3030/');
     dispatch({
       type: types.SET_SECRET_WORD,
-      payload: data
+      payload: data,
     });
   } catch (e) {
     console.log('getSecretWord error:', e.message);
   }
+};
+
+export const resetGame = () => (dispatch, getState) => {
+  const { success } = getState();
+  if (!success) return;
+  dispatch({ type: types.RESET_GAME });
 };

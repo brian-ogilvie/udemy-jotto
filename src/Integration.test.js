@@ -1,5 +1,5 @@
 import { storeFactory } from '../test/testUtils';
-import { guessWord } from './store/actions';
+import { guessWord, resetGame } from './store/actions';
 
 describe('guessWord action dispatcher', () => {
   const secretWord = 'party';
@@ -16,7 +16,7 @@ describe('guessWord action dispatcher', () => {
       const expectedState = {
         ...initialState,
         success: false,
-        guessedWords: [{ guessedWord: unsuccessfulGuess, letterMatchCount: 3 }]
+        guessedWords: [{ guessedWord: unsuccessfulGuess, letterMatchCount: 3 }],
       };
       expect(newState).toEqual(expectedState);
     });
@@ -26,7 +26,7 @@ describe('guessWord action dispatcher', () => {
       const expectedState = {
         ...initialState,
         success: true,
-        guessedWords: [{ guessedWord: secretWord, letterMatchCount: 5 }]
+        guessedWords: [{ guessedWord: secretWord, letterMatchCount: 5 }],
       };
       expect(newState).toEqual(expectedState);
     });
@@ -47,8 +47,8 @@ describe('guessWord action dispatcher', () => {
         success: false,
         guessedWords: [
           ...guessedWords,
-          { guessedWord: unsuccessfulGuess, letterMatchCount: 3 }
-        ]
+          { guessedWord: unsuccessfulGuess, letterMatchCount: 3 },
+        ],
       };
       expect(newState).toEqual(expectedState);
     });
@@ -60,10 +60,46 @@ describe('guessWord action dispatcher', () => {
         success: true,
         guessedWords: [
           ...guessedWords,
-          { guessedWord: secretWord, letterMatchCount: 5 }
-        ]
+          { guessedWord: secretWord, letterMatchCount: 5 },
+        ],
       };
       expect(newState).toEqual(expectedState);
+    });
+  });
+});
+
+describe('`resetGame` action creator', () => {
+  describe('user has not guessed word', () => {
+    const initialState = {
+      success: false,
+      secretWord: 'party',
+      guessedWords: [{ guessedWord: 'train', letterMatchCount: 3 }],
+    };
+    const store = storeFactory(initialState);
+    test('does not reset the game', async () => {
+      await store.dispatch(resetGame());
+      const newState = store.getState();
+      expect(newState).toEqual(initialState);
+    });
+  });
+  describe('user has correctly guessed the word', () => {
+    let store;
+    beforeEach(() => {
+      const initialState = {
+        success: true,
+        secretWord: 'party',
+        guessedWords: [
+          { guessedWord: 'train', letterMatchCount: 3 },
+          { guessedWord: 'party', letterMatchCount: 5 },
+        ],
+      };
+      store = storeFactory(initialState);
+    });
+
+    test('resets `success` to false', async () => {
+      await store.dispatch(resetGame());
+      const { success } = store.getState();
+      expect(success).toBe(false);
     });
   });
 });
