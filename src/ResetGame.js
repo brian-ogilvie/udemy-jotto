@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { resetGame } from './store/actions';
 
 export class UnconnectedResetGame extends Component {
   render() {
@@ -16,4 +18,11 @@ export class UnconnectedResetGame extends Component {
 
 const mapStateToProps = ({ success }) => ({ success });
 
-export default connect(mapStateToProps, {})(UnconnectedResetGame);
+const mapDispatchToProps = dispatch => ({
+  resetGame: bindActionCreators(resetGame, dispatch),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UnconnectedResetGame);

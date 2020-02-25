@@ -38,3 +38,17 @@ describe('render', () => {
     });
   });
 });
+
+describe('redux props', () => {
+  test('has success piece of state', () => {
+    const success = true;
+    const wrapper = setup({ success });
+    const { success: successProp } = wrapper.instance().props;
+    expect(successProp).toBe(success);
+  });
+  test('resetGame action creator prop is a function', () => {
+    const wrapper = setup();
+    const { resetGame: resetGameProp } = wrapper.instance().props;
+    expect(resetGameProp).toBeInstanceOf(Function);
+  });
+});
