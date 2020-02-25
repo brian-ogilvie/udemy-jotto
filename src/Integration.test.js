@@ -101,5 +101,11 @@ describe('`resetGame` action creator', () => {
       const { success } = store.getState();
       expect(success).toBe(false);
     });
+
+    test('resets `guessedWords` to empty array', async () => {
+      await store.dispatch(resetGame());
+      const { guessedWords } = store.getState();
+      expect(guessedWords.length).toBe(0);
+    });
   });
 });
