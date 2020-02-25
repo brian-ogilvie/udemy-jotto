@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { storeFactory, findByTestAttr } from '../test/testUtils';
-import ResetGame from './ResetGame';
+import ResetGame, { UnconnectedResetGame } from './ResetGame';
 
 function setup(initialState = {}) {
   const store = storeFactory(initialState);
@@ -50,5 +50,17 @@ describe('redux props', () => {
     const wrapper = setup();
     const { resetGame: resetGameProp } = wrapper.instance().props;
     expect(resetGameProp).toBeInstanceOf(Function);
+  });
+});
+
+describe('`resetGame` action creator calls', () => {
+  test('clicking the button calls `resetGame`', () => {
+    const resetGame = jest.fn();
+    const wrapper = shallow(
+      <UnconnectedResetGame success={true} resetGame={resetGame} />
+    );
+    const resetButton = findByTestAttr(wrapper, 'reset-button');
+    resetButton.simulate('click');
+    expect(resetGame).toHaveBeenCalled();
   });
 });

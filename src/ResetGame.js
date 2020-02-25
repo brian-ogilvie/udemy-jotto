@@ -5,9 +5,13 @@ import { resetGame } from './store/actions';
 
 export class UnconnectedResetGame extends Component {
   render() {
-    const { success } = this.props;
+    const { success, resetGame } = this.props;
     const contents = success ? (
-      <button data-test="reset-button" className="btn btn-primary mb-2">
+      <button
+        data-test="reset-button"
+        className="btn btn-primary mb-2"
+        onClick={resetGame}
+      >
         New Word
       </button>
     ) : null;
