@@ -1,3 +1,4 @@
+import moxios from 'moxios';
 import { storeFactory } from '../test/testUtils';
 import { guessWord, resetGame } from './store/actions';
 
@@ -69,6 +70,19 @@ describe('guessWord action dispatcher', () => {
 });
 
 describe('`resetGame` action creator', () => {
+  const secretWord = 'tests';
+  beforeEach(() => {
+    moxios.install();
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 200,
+        response: secretWord,
+      });
+    });
+  });
+  afterEach(() => moxios.uninstall());
+
   describe('user has not guessed word', () => {
     const initialState = {
       success: false,
@@ -82,6 +96,7 @@ describe('`resetGame` action creator', () => {
       expect(newState).toEqual(initialState);
     });
   });
+
   describe('user has correctly guessed the word', () => {
     let store;
     beforeEach(() => {
@@ -106,6 +121,12 @@ describe('`resetGame` action creator', () => {
       await store.dispatch(resetGame());
       const { guessedWords } = store.getState();
       expect(guessedWords.length).toBe(0);
+    });
+
+    test('gets new secret word', async () => {
+      await store.dispatch(resetGame());
+      const { secretWord: newSecretWord } = store.getState();
+      expect(newSecretWord).toBe(secretWord);
     });
   });
 });

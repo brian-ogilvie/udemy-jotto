@@ -26,8 +26,9 @@ export const getSecretWord = () => async dispatch => {
   }
 };
 
-export const resetGame = () => (dispatch, getState) => {
+export const resetGame = () => async (dispatch, getState) => {
   const { success } = getState();
   if (!success) return;
+  await dispatch(getSecretWord());
   dispatch({ type: types.RESET_GAME });
 };
