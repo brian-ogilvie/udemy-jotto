@@ -16,6 +16,7 @@ export class UnconnectedApp extends Component {
     return (
       <div className="container">
         <h1>Jotto</h1>
+        <div>The secret word is {secretWord}</div>
         <Congrats success={success} />
         <Input />
         <GuessedWords guessedWords={guessedWords} />
